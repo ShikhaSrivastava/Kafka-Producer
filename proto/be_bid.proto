@@ -1,0 +1,28 @@
+//
+// data definition for a bid object
+//
+
+option optimize_for = SPEED;
+
+package rubicon.data.bid_engine;
+
+
+// one bid
+message Bid_PB {
+    optional bool           valid               = 2 [default = true];
+    optional uint32         bid_id              = 3;
+    optional double         price               = 4;    // == bid
+    optional double         price_adjusted      = 5;    // populated and used by AE only, BE should not care about this.
+    optional double         tech_fee_price      = 6;
+    optional uint32         network_id          = 7;
+    optional string         advertiser_name     = 8;
+    optional uint32         advertiser_id       = 9;
+    optional uint32         ad_id               = 10;
+    optional string         ad_tag              = 11;       
+    optional uint32         deal_id             = 12;
+    optional uint32         duration            = 13;   // time to get the response back from dsp, mseconds
+    optional uint32         billable_seat_id    = 14; 
+    repeated uint32         seat_ids            = 15;
+    optional bool           private_auction     = 16 [default = false];
+    optional string         targeting           = 17;   // coming back from myads         
+}

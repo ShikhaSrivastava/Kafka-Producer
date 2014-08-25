@@ -1,0 +1,59 @@
+//
+// Copyright (C) 2010 Fox Audience Network
+//
+
+//
+// Protocol Buffer definition for "Event Journaller"
+//
+
+package fim.event.journaller;
+option java_outer_classname = "EventJournallerMessageProto";
+option optimize_for = SPEED;
+
+import "event_bus.proto";
+
+
+// IMPORTANT NOTE: Messages RecordedEvent and UnparseRecordedEvent are
+// identical in everything except for 'event' which should be defined
+// as 'bytes' in UnparsedRecordedEvent.  Keep the two messages in sync
+// at all times.
+message RecordedEvent {
+    optional uint64                arrival_time = 2;
+                                                     // event arrival time in
+                                                     // msec
+    optional fim.eventbus.EventBusMessage event = 3; // parseable message
+    optional fim.eventbus.EndPoint channel = 5;      // multicast channel of
+                                                     // the event
+}
+
+message UnparsedRecordedEvent {        // compatible with RecordedEvent
+    optional uint64 arrival_time = 2;  // event arrival time in msec
+    optional bytes  event = 3;         // The event in raw bytes
+    optional fim.eventbus.EndPoint channel = 5;
+                                       // multicast channel of the event
+}
+
+
+// message saved in the output of the reconciliation module
+message ReconciledEvent {
+    enum Type {
+        CORRUPT_RECORDED_JOURNAL        = 0;        
+        CORRUPT_EVENT_BUS_MESSAGE       = 1;
+        INVALID_EVENT_BUS_MESSAGE       = 2;
+        UNKNOWN_EVENT_BUS_MESSAGE       = 3;
+        UNPARSABLE_EVENT_BUS_MESSAGE    = 4;
+        BACKLOG_MESSAGE                 = 5;
+        INCONSISTENT_MESSAGE            = 6;
+        VALID_MESSAGE                   = 7;
+        MERGED_MESSAGES_SENDER          = 8;
+        MERGED_MESSAGES_CHANNEL         = 9;
+        UNSET                           = 20;
+    }
+
+    required Type               type = 2 [default = UNSET]; // type of the event
+    optional RecordedEvent      event = 3;                  // event received from journaler
+    optional string             original_journaler = 4;     // journaler that generated the event 
+    repeated string             journalers = 5;             // list of journalers we received the event from
+    optional uint32             run_count = 6;              // number of times a message was processed.
+}
+

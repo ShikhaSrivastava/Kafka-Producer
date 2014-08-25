@@ -1,0 +1,209 @@
+//
+// adsafe data
+// 
+
+option optimize_for = SPEED;
+
+package rubicon.data.adsafe;
+
+//
+// brand safety category message
+//
+message BSCResponse_PB {
+    optional uint64         adult               = 2;    // (adt) Adult
+    optional uint64         alcohol             = 3;    // (alc) Alcohol
+    optional uint64         illegal_downloads   = 4;    // (dlm) Illegal Downloads
+    optional uint64         illegal_drugs       = 5;    // (drg) Illegal Drugs
+    optional uint64         hate                = 6;    // (hat) Hate
+    optional uint64         offensive_language  = 7;    // (off) Offensive Language
+}
+
+//
+// IAB Category message
+//
+message IABCategory_PB {
+    enum IABCategory_E {
+        IAB_ARTS        = 1;
+        IAB_AUTO        = 2;
+        IAB_BUSINESS    = 3;
+        IAB_CAREERS     = 4;
+        IAB_EDU         = 5;
+        IAB_FAMILY      = 6;
+        IAB_FINANCE     = 7;
+        IAB_FOOD        = 8;
+        IAB_HEALTH      = 9;
+        IAB_HOBBIES     = 10;
+        IAB_HOME        = 11;
+        IAB_LAWGOVT     = 12;
+        IAB_NEWS        = 13;
+        IAB_PETS        = 14;
+        IAB_REALESTATE  = 15;
+        IAB_RELIGION    = 16;
+        IAB_SCIENCE     = 17;
+        IAB_SHOP        = 18;
+        IAB_SOCIETY     = 19;
+        IAB_SPORTS      = 20;
+        IAB_STYLE       = 21;
+        IAB_TECH        = 22;
+        IAB_TRAVEL      = 23;
+    }
+    
+    optional IABCategory_E      code        = 1;
+    optional string             raw_value   = 2;
+}
+
+// 
+//  IAB Sub Category
+//
+message IABSubCategory_PB {
+    enum IABSubCategory_E {
+        IAB_T2_ACCESSOR     = 1;
+        IAB_T2_ADOPTION     = 2;
+        IAB_T2_ADVERTIS     = 3;
+        IAB_T2_AGRICULT     = 4;
+        IAB_T2_ALCOHOL      = 5;
+        IAB_T2_ALTMED       = 6;
+        IAB_T2_ARCHITEC     = 7;
+        IAB_T2_ART          = 8;
+        IAB_T2_ASTROLOG     = 9;
+        IAB_T2_ASTRONOM     = 10;
+        IAB_T2_BANK         = 11;
+        IAB_T2_BASEBALL     = 12;
+        IAB_T2_BB           = 13;
+        IAB_T2_BEVERAGE     = 14;
+        IAB_T2_BIOLOGY      = 15;
+        IAB_T2_BIOTECH      = 16;
+        IAB_T2_BODYBUIL     = 17;
+        IAB_T2_BOOKS        = 18;
+        IAB_T2_BOTANY       = 19;
+        IAB_T2_BOXING       = 20;
+        IAB_T2_BSKTBALL     = 21;
+        IAB_T2_BUDDHISM     = 22;
+        IAB_T2_CAMPING      = 23;
+        IAB_T2_CARDGAME     = 24;
+        IAB_T2_CARDIOLO     = 25;
+        IAB_T2_CATHOLIC     = 26;
+        IAB_T2_CELLPHON     = 27;
+        IAB_T2_CHAT         = 28;
+        IAB_T2_CHEMISTR     = 29;
+        IAB_T2_CHESS        = 30;
+        IAB_T2_CHRISTIA     = 31;
+        IAB_T2_CITIES       = 32;
+        IAB_T2_CLOTHING     = 33;
+        IAB_T2_COLLECT      = 34;
+        IAB_T2_COLLEGE      = 35;
+        IAB_T2_COMICBK      = 36;
+        IAB_T2_COMPETIT     = 37;
+        IAB_T2_COMPUTER     = 38;
+        IAB_T2_CONSTRUC     = 39;
+        IAB_T2_CRICKET      = 40;
+        IAB_T2_CRUISES      = 41;
+        IAB_T2_DIETING      = 42;
+        IAB_T2_DISEASE      = 43;
+        IAB_T2_DIVORCE      = 44;
+        IAB_T2_DRAWING      = 45;
+        IAB_T2_DRUGS        = 46;
+        IAB_T2_ECOLOGY      = 47;
+        IAB_T2_ECOMMERC     = 48;
+        IAB_T2_ELCTRONI     = 49;
+        IAB_T2_EMAIL        = 50;
+        IAB_T2_FASHION      = 51;
+        IAB_T2_FISHING      = 52;
+        IAB_T2_FOOTBALL     = 53;
+        IAB_T2_GAMES        = 54;
+        IAB_T2_GARDEN       = 55;
+        IAB_T2_GASTRONO     = 56;
+        IAB_T2_GEOGRAPH     = 57;
+        IAB_T2_GEOLOGY      = 58;
+        IAB_T2_GOLF         = 59;
+        IAB_T2_GOSSIP       = 60;
+        IAB_T2_GOV          = 61;
+        IAB_T2_HAIRCARE     = 62;
+        IAB_T2_HARDWARE     = 63;
+        IAB_T2_HINDUISM     = 64;
+        IAB_T2_HMETHEAT     = 65;
+        IAB_T2_HOBBY        = 66;
+        IAB_T2_HOCKEY       = 67;
+        IAB_T2_HOLIDAYS     = 68;
+        IAB_T2_HOMEIMP      = 69;
+        IAB_T2_HONEYMOO     = 70;
+        IAB_T2_HORSERAC     = 71;
+        IAB_T2_HOUSE        = 72;
+        IAB_T2_HUNTING      = 73;
+        IAB_T2_ICESKATE     = 74;
+        IAB_T2_IMMIGRAT     = 75;
+        IAB_T2_INSURANC     = 76;
+        IAB_T2_INTDEC       = 77;
+        IAB_T2_INTERNET     = 78;
+        IAB_T2_ISLAM        = 79;
+        IAB_T2_JEWELRY      = 80;
+        IAB_T2_JUDAISM      = 81;
+        IAB_T2_KAYAK        = 82;
+        IAB_T2_LAWJUST      = 83;
+        IAB_T2_LOANS        = 84;
+        IAB_T2_LOGISTIC     = 85;
+        IAB_T2_MAGAZINE     = 86;
+        IAB_T2_MARKETIN     = 87;
+        IAB_T2_MARRIAGE     = 88;
+        IAB_T2_MINIVAN      = 89;
+        IAB_T2_MOTORCYC     = 90;
+        IAB_T2_MOVIE        = 91;
+        IAB_T2_MRTLARTS     = 92;
+        IAB_T2_MUSIC        = 93;
+        IAB_T2_NARESRVS     = 94;
+        IAB_T2_NASCAR       = 95;
+        IAB_T2_NETWORKI     = 96;
+        IAB_T2_OLYMPICS     = 97;
+        IAB_T2_PAINTING     = 98;
+        IAB_T2_PEOPLE       = 99;
+        IAB_T2_PHOTOGRA     = 100;
+        IAB_T2_PHYSICS      = 101;
+        IAB_T2_POLITICS     = 102;
+        IAB_T2_PREGNANC     = 103;
+        IAB_T2_PSYCHIAT     = 104;
+        IAB_T2_PURCHASE     = 105;
+        IAB_T2_RADIO        = 106;
+        IAB_T2_REHAB        = 107;
+        IAB_T2_RETIREME     = 108;
+        IAB_T2_ROCKCLIM     = 109;
+        IAB_T2_SECURITI     = 110;
+        IAB_T2_SEDAN        = 111;
+        IAB_T2_SHOWSEVE     = 112;
+        IAB_T2_SOFTWARE     = 113;
+        IAB_T2_SPA          = 114;
+        IAB_T2_SPORTNWS     = 115;
+        IAB_T2_SPRTSCAR     = 116;
+        IAB_T2_STAMPS       = 117;
+        IAB_T2_SUV          = 118;
+        IAB_T2_SWIMMING     = 119;
+        IAB_T2_TATTOOS      = 120;
+        IAB_T2_TOURISM      = 121;
+        IAB_T2_TRANSPOR     = 122;
+        IAB_T2_TV           = 123;
+        IAB_T2_UNEMPLOY     = 124;
+        IAB_T2_VETMED       = 125;
+        IAB_T2_VIDEOGAM     = 126;
+        IAB_T2_WEATHER      = 127;
+        IAB_T2_ZOOLOGY      = 128;
+    }
+    
+    optional IABSubCategory_E   code        = 1;
+    optional string             raw_value   = 2;
+}
+
+//
+// adsafe response message
+//
+message AdSafeResponse_PB {
+    enum ActionStatus_E {
+        PASSED      = 1;
+        FAILED      = 2;
+        UNKNOWN     = 3;
+        IGNORE      = 4;
+    }
+
+    optional ActionStatus_E         action        = 1 [default = UNKNOWN];
+    optional BSCResponse_PB         bsc           = 2;
+    repeated IABCategory_PB         iab_cat       = 3;
+    repeated IABSubCategory_PB      iab_subcat    = 4;
+}

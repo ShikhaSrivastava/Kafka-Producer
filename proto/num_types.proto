@@ -1,0 +1,40 @@
+//
+// messages that we use to wrap different types of unsigned/signed int
+// where we should also be able to deal with inputs that might be string.
+//
+
+option optimize_for = SPEED;
+
+package rubicon.data.common;
+
+//
+// an int32 number
+//
+message AnInt32_PB {
+    optional int32      value       = 1;        // value in case of valid number
+    optional string     raw_value   = 2;        // raw value in case of invalid number
+}
+
+//
+// an uint32 number
+//
+message AnUInt32_PB {
+    optional uint32     value       = 1;        // value in case of valid number
+    optional string     raw_value   = 2;        // raw value in case of invalid number
+}
+
+//
+// an int64 number
+//
+message AnInt64_PB {
+    optional int64      value       = 1;        // value in case of valid number
+    optional string     raw_value   = 2;        // raw value in case of invalid number
+}
+
+//
+// an uint64 number
+//
+message AnUInt64_PB {
+    optional uint64     value       = 1;        // value in case of valid number
+    optional string     raw_value   = 2;        // raw value in case of invalid number
+}

@@ -1,0 +1,29 @@
+//
+// Copyright (C) 2013 The Rubicon Project
+//
+
+//
+// Protocol Buffer definition for Online Aggregator "Beacon" message
+//
+
+package rubicon.data_pipeline.aggregation_framework;
+option java_outer_classname = "AggregationBeacon";
+option optimize_for = SPEED;
+
+import "event_bus.proto";
+
+message Beacon_PB {
+    required uint32 server_id = 1;              // Host unique identifier,
+                                                // most likely one of its
+                                                // network interfaces
+    required uint32 server_port = 2;            // The local port where server
+                                                // is binding to 
+    required uint32 service_id = 3;             // Service ID.  All
+                                                // aggregators with the same
+                                                // service ID split the events
+                                                // amongst themselves.
+    optional string service_name = 4;           // Name of the service, e.g.
+                                                // "Ad Engine Aggregator (PROD)"
+    repeated fim.eventbus.EndPoint channel = 5; // Multicast channel(s) of
+                                                // interest.
+}

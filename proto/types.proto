@@ -1,0 +1,65 @@
+//
+// all types that are shared between AE, BE, scheduler, ...
+//
+
+option optimize_for = SPEED;
+
+package rubicon.data.common;
+
+
+//
+// mime types
+//
+enum MimeType_E {
+    UNKNOWN_MIME       = 0;
+    JS_MIME            = 1;
+    HTML_MIME          = 2;
+    IMAGE_MIME         = 3;
+    REDIRECT_MIME      = 4;
+    PSA_MIME           = 5;
+}
+
+//
+// ad class types
+//
+enum AdClassType_E {
+    UNKNOWN_AD_CLASS         = 0;
+    PARTNER_AD_CLASS         = 1;
+    DIRECT_AD_CLASS          = 2;
+    RTB_AD_CLASS             = 3;
+    STATIC_BID_AD_CLASS      = 4;
+    PSA_AD_CLASS             = 5;
+    HOUSE_AD_CLASS           = 6;
+}
+
+
+//
+// pmp (priority) class
+//
+enum PMPClassType_E {
+    UNSPECIFIED_PMP_CLASS       = 0;
+    STANDARD_PMP_CLASS          = 1;
+    OVERRIDE_PMP_CLASS          = 2;
+    PRIORITY_PMP_CLASS          = 3;
+    PRIVATE_PMP_CLASS           = 4;
+}
+
+//
+// private tiers
+//
+enum PrivateTierType_E {
+    UNKNOWN_TIER                 = 0;
+    STANDARD_TIER                = 1;
+    FLOOR_OVERRIDE_TIER          = 2;
+    PRIORITY_FIRST_RIGHT_TIER    = 3;
+    PRIVATE_TIER                 = 4;
+}
+
+
+//
+// be request/response type
+//
+enum BERequestResponseType_E {
+    JSON_BE_TYPE        = 0;
+    PROTOBUF_BE_TYPE    = 1;
+}

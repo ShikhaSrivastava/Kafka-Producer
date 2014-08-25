@@ -1,0 +1,24 @@
+//
+// data definition for ip address
+//
+
+option optimize_for = SPEED;
+
+package rubicon.data.common;
+
+//
+// ip address, either ipv4 or ipv6 will be populated.
+//
+message IPAddress_PB {
+
+    // ip address type
+    enum IPAddressType_E {
+        IPV4    = 0;
+        IPV6    = 1;
+    }
+
+    optional IPAddressType_E    type    = 1 [default = IPV4];   // specifies the type    
+    optional fixed32            ipv4    = 2;                    // ipv4, network ordered
+    optional bytes              ipv6    = 3;                    // ipv6, must be 16 bytes, network ordered
+    optional bool               masked  = 4 [default = false];  // whether the ip is encrypted or not             
+}

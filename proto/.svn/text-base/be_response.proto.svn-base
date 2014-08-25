@@ -1,0 +1,50 @@
+//
+// data definition for bid_engine response
+//
+
+option optimize_for = SPEED;
+
+package rubicon.data.bid_engine;
+
+import "be_bid.proto";
+
+
+//
+// user sleep info
+//
+message UserSleep_PB {
+    optional uint32         network_id          = 2;
+    optional uint32         expires             = 3;
+    optional double         sample              = 4; 
+}
+
+//
+// BE response for valuation requests
+// 
+message MarketAPI_PB {
+    optional string         coeffs              = 1;    // coeffs for the market_api 
+}
+
+//
+// bid engine's response
+//
+message Response_PB {
+
+    // 
+    // response codes from BE
+    //
+    enum ResponseCode_E {
+        OK_RESPONSE           = 0;      // apache has #defined OK! has to add something to it so it won't conflict
+        DECLINED_RESPONSE     = 1;      // apche has #defined DECLINED!
+        TIMED_OUT_RESPONSE    = 2;        
+        UNKNOWN_RESPONSE      = 3;
+    }
+    optional string                 auction_id              = 1;        // auction id
+    optional ResponseCode_E         return_code             = 2;
+    repeated Bid_PB                 bids                    = 3;        // all bids
+    repeated UserSleep_PB           user_sleep              = 4;
+    
+    optional bool                   market_api_response     = 10 [default = false]; // whether or not this is a response to a market api request
+
+    optional MarketAPI_PB           market_api              = 20;       // market api response
+}

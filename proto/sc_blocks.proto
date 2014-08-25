@@ -1,0 +1,401 @@
+//
+// data definition for all blocks defined by scheduler 
+//
+
+option optimize_for = SPEED;
+
+package rubicon.data.scheduler;
+
+import "types.proto";
+
+// 
+// block types
+//
+enum BlockType_E {
+    LOCAL_VARS_BLOCK            = 0;
+    ALLOWED_DOMAINS_BLOCK       = 1;
+    PUBLISHER_VARS_BLOCK        = 2;
+    DK_TOKENS_BLOCK             = 3;
+    DK_STATIC_CHAIN_BLOCK       = 4;
+    DK_ZONES_BLOCK              = 5;
+    RTB_NETWORKS_BLOCK          = 6;
+    BACKFILL_BLOCK              = 7;
+    RESTRICTIONS_BLOCK          = 8;
+    IMAGES_BLOCK                = 9;      
+    ALLOWED_NO_COOKIE_BLOCK     = 10;
+    GUARANTEED_BLOCK            = 11;      // in prototype phase?
+    RECOMMENDATIONS_BLOCK       = 12;      // parsing depends on the previous block's results
+    HOUSE_BLOCK                 = 13;
+    EXTRA_BLOCK                 = 14;
+    RTB_RULES_BLOCK             = 15;        
+    CREATIVES_BLOCK             = 16;      // parsing depends on the previous block's results
+    NO_SCRIPT_BLOCK             = 17;
+      
+    // the following must be the last defined entry
+    BLOCK_COUNT                 = 18;       // number of defined blocks
+}
+
+
+//
+// a message representing a boolean expression
+//
+message Expression_PB {
+    optional bool       all_ads_allowed     = 1 [default = false];    // to handle "*" is present  
+    optional string     expression          = 2;
+//    4^country=ae,bh,jo,kw,lb,om,qa,sa|country=at^3141724.js,3225981.js
+}
+
+
+//
+// capping information
+//
+message Capping_PB {
+    optional uint32     num                 = 1;
+    optional uint32     period              = 2;        // MRK: period in sec?
+    optional uint32     throttle_period     = 3;
+    optional uint32     count               = 4;        // not populated by scheduler, comes from rpb cookie, used for market_api requests
+}
+
+
+//*********** block local vars
+//
+// one entry in the local var block, key=value
+//
+message LocalVar_PB {
+    optional string      key          = 1;
+    optional string      value        = 2;
+}
+
+///
+// local var block
+//
+message BlockLocalVars_PB {
+    repeated LocalVar_PB     local_vars   = 1;
+}
+
+
+//*********** block allowed domains
+//
+// one entry in the allowed_domain block
+//
+message AllowedDomain_PB {
+    optional string             domain_name         = 1;    
+} 
+
+//
+// allowed domains block
+//
+message BlockAllowedDomains_PB {
+    optional bool                   all_domains_allowed     = 1 [default = false];      // whether or not "*" is present 
+    repeated AllowedDomain_PB       allowed_domains         = 2;
+}
+
+
+//*********** block publisher vars
+//
+// one entry in the publisher_vars block
+//
+message PublusherVar_PB {
+    optional string     key                 = 1;
+    optional string     original_value      = 2;
+    optional string     new_value           = 3;
+    optional string     new_name            = 4;
+}
+    
+//
+// publisher vars blocks
+//
+message BlockPublisherVars_PB {
+    repeated PublusherVar_PB    publisher_vars  = 1;    
+}
+
+
+//*********** block dk tokens 
+//
+// one entry in the dk_token block
+//
+message DKToken_PB {
+    optional string         ad_id_str   = 1;
+    optional string         ad_token    = 2;
+    
+    // generated for AE
+    optional uint32         ad_id       = 20;       // generated from ad_id_str
+} 
+
+//
+// block DK tokens
+//
+message BlockDKTokens_PB {
+    repeated DKToken_PB         dk_tokens   = 1;
+}
+
+//*********** block dk static chain
+//
+// one entry in the dk static chain block
+//
+message DKStaticChain_PB {
+    optional string         from_ad_id_str  = 1;
+    optional string         to_ad_id_str    = 2;
+    
+    // generated for AE
+    optional uint32         from_ad_id      = 20;       // generated from from_ad_id_str
+    optional uint32         to_ad_id        = 21;       // generated from to_ad_id_str   
+} 
+
+//
+// DK static chains block
+//
+message BlockDKStaticChains_PB {
+    repeated DKStaticChain_PB   dk_statics      = 1;
+}
+
+//*********** block dk zones
+//
+// one entry in the dk zone block
+//
+message DKZone_PB {
+    optional string     ad_id_str   = 1;
+    repeated uint32     zone_ids    = 2;
+    
+    // generated for AE
+    optional uint32     ad_id       = 20;       // generated from ad_id_str    
+} 
+
+//
+// DK zones block
+//
+message BlockDKZones_PB {
+    repeated DKZone_PB      dk_zones    = 1;
+}
+
+
+//*********** block rtb networks 
+//
+// one entry in the rtb networks block
+//
+message RTBNetwork_PB {
+    optional uint32         network_id      = 1;
+    optional double         premium         = 2;
+    optional double         throttle        = 3;
+    repeated string         ad_id_strs      = 4;
+    
+    // generated for AE
+    repeated uint32         ad_ids          = 20;       // generated from ad_id_str             
+} 
+
+//
+// RTB networks block
+//
+message BlockRTBNetworks_PB {
+    repeated RTBNetwork_PB      rtb_networks    = 1;
+}
+
+//*********** block back fills
+//
+// one entry in the backfills block
+//
+message BackFill_PB {
+    optional string         ad_id_str    = 1;      
+
+    // generated for AE
+    optional uint32         ad_id        = 20;       // generated from ad_id_str    
+} 
+
+//
+// block back fills
+//
+message BlockBackFills_PB {
+    repeated BackFill_PB        back_fills   = 1;
+}
+
+
+//*********** block restrictions
+// 
+// one entry in th restrictions block
+//
+message Restriction {
+    optional Expression_PB      rule        = 1;
+    repeated string             ad_ids      = 2;
+} 
+    
+//
+// block restrictions
+//
+message BlockRestrictions_PB {
+    repeated Restriction            restrictions = 1;
+}
+
+
+//*********** block images 
+//
+// one entry in the images block, an ad_id
+//
+message Image_PB {
+    optional string         ad_id_str   = 1;    
+
+    // generated for AE
+    optional uint32         ad_id       = 20;       // generated from ad_id_str    
+} 
+
+//
+// block images
+//
+message BlockImages_PB {
+    repeated Image_PB       images      = 1;
+} 
+
+//*********** block allowed no cookies
+//
+// one entry in the allowed no cookie block, an ad_id
+//
+message AllowedNoCookie_PB {
+    optional string         ad_id_str   = 1;    
+
+    // generated for AE
+    optional uint32         ad_id       = 20;       // generated from ad_id_str    
+} 
+
+//
+// block allowed no cookie
+//
+message BlockAllowedNoCookies_PB {   
+    repeated AllowedNoCookie_PB  allowed_no_cookie_ads      = 1;
+} 
+    
+//*********** block recommendations
+//
+// one entry in recommendation block 
+//
+message Recommendation_PB {
+    optional string                                 ad_id_str       = 1;
+    optional double                                 weight          = 2;
+    optional double                                 cpm_price       = 3; 
+    optional double                                 price_floor     = 4;    // AKA bid_floor
+    optional bool                                   infinite_floor  = 5 [default = false];
+    optional double                                 dcpm_price      = 6;
+    optional Capping_PB                             frequency_cap   = 7;
+    optional Capping_PB                             click_cap       = 8;
+    optional bool                                   conversion      = 9;
+    optional uint32                                 network_id      = 10;
+    optional uint32                                 campaign_id     = 11;
+    optional rubicon.data.common.AdClassType_E      ad_class        = 12;
+    optional uint32                                 advertiser_id   = 13;
+    optional uint32                                 seat_id         = 14;       
+    optional bool                                   capped          = 15 [default = false];    
+
+    // generated for AE
+    optional uint32         ad_id                                   = 50;       // generated from ad_id_str    
+}
+
+//
+// recommendations block
+//
+message BlockRecommendations_PB {
+    repeated Recommendation_PB                          recommendations = 1;
+}
+
+//*********** block house
+//
+// one entry in the house block
+//
+message House_PB {
+    optional string         ad_id_str       = 1;  
+    optional double         weight          = 2;
+    optional uint32         network_id      = 3;
+    optional uint32         campaign_id     = 4;    
+     
+    // generated for AE
+    optional uint32         ad_id           = 20;       // generated from ad_id_str         
+} 
+
+//
+// block house
+//
+message BlockHouse_PB {
+    repeated House_PB           house_ads       = 1;
+}    
+    
+//*********** block extra
+//
+// weight/price/... for extra entries
+//
+message ExtraWeightPrice_PB {
+    optional string         ad_id_str       = 1;
+    optional double         weight          = 2;
+    // MRK: check with JZ, there seem to be more stuff (price, floor, premium) here!    
+    
+    // generated for AE
+    optional uint32         ad_id           = 20;       // generated from ad_id_str        
+}
+//
+// one entry in the extra block
+//
+message Extra_PB {
+    optional Expression_PB              rule            = 1;
+    repeated ExtraWeightPrice_PB        weight_price    = 2;
+}
+
+//
+// extra block info
+//
+message BlockExtra_PB {
+    repeated Extra_PB                       extras = 1;
+}   
+    
+
+//*********** block rtb rules
+// 
+// one entry in the rtb rules block
+//
+message RTBRule_PB {
+    optional Expression_PB                          rule                = 1;            // AKA rule
+    optional string                                 ad_id_str           = 2;
+    optional bool                                   wildcard_ad_id      = 4 [default = false];
+    optional uint32                                 advertiser_id       = 5;
+    optional uint32                                 seat_id             = 6;
+    optional uint32                                 deal_id             = 7;
+    optional double                                 price_floor         = 8;
+    optional bool                                   infinite_floor      = 9 [default = false];
+    optional double                                 price_premium       = 10;
+    optional bool                                   dynamic_floor       = 11 [default = false];
+    optional double                                 minimum_floor       = 12 [default = -1];
+    optional bool                                   infinite_min_floor  = 13 [default = false];
+    optional rubicon.data.common.PMPClassType_E     priority_class      = 14 [default = UNSPECIFIED_PMP_CLASS];    
+    optional uint64                                 time_start          = 15;
+    optional uint64                                 time_end            = 16;
+        
+    // generated for AE
+    optional uint32                                 ad_id               = 50;            // extracted from ad_id_str
+
+    // the followings are generated for AE for internal use
+    optional bool                                   time_active         = 70 [default = true];  // calculated from time_start and time_end, if present
+    optional uint32                                 network_id          = 71;
+    optional uint32                                 rank                = 72;                   // rank for each rule, tie breaker    
+}
+
+//
+// rtb rules block
+//
+message BlockRTBRules_PB {  
+    repeated RTBRule_PB                                 rtb_rules = 1;
+}
+    
+//*********** block creatives 
+message LocationWeight_PB {
+    optional string         path = 1;
+    optional double         weight = 2;
+}
+//
+// one entry in the creatives block
+//
+message Creative_PB {     
+    optional string             ad_id       = 1;
+    repeated LocationWeight_PB  location    = 2;            
+} 
+
+// 
+// creatives block
+//
+message BlockCreatives_PB {    
+    repeated Creative_PB            creatives = 1;
+}

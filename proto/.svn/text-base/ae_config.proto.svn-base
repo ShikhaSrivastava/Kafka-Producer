@@ -1,0 +1,132 @@
+//
+// configuration attributes for AdEngine. If anything is added to the code
+// or the httpd.conf file for AdEngine, this file needs to be updated accordingly.
+// 
+
+option optimize_for = SPEED;
+
+package rubicon.data.ad_engine;
+
+import "common.proto";
+import "types.proto";
+
+//
+// metadata info
+//
+message MetaDataInfo_PB {
+    // meta data file
+    optional string                                 metadata_filename       = 2;
+    repeated rubicon.data.common.KeyValuePair_PB    metadata_key_value      = 3;
+} 
+
+//
+// config object for adengine
+//
+message AdEngineConfig_PB {
+    optional string                                 domain                                  = 2;    
+    optional uint64                                 machine_id                              = 3;
+    optional string                                 document_root                           = 4;     
+    optional string                                 data_center                             = 5;  
+    optional string                                 default_rules_file                      = 6;  
+        
+    // RTB stuff
+    repeated string                                 rtb_servers                             = 10;
+    optional double                                 rtb_tech_fee_pct                        = 11 [default = 0.0];
+    optional uint32                                 rtb_latency_allowance_ms                = 12;
+    optional uint32                                 rtb_response_sla                        = 13;
+    optional uint32                                 rtb_response_median                     = 14;
+    repeated uint32                                 rtb_tech_fee_exclude_site_ids           = 15;
+    optional uint64                                 rtb_throttle_load_max                   = 16;
+    repeated uint32                                 rtb_verbose_site_ids                    = 17;
+    optional bool                                   rtb_enable_tag_double_escaping          = 18;
+    repeated rubicon.data.common.KeyValuePair_PB    rtb_enc_key                             = 19;
+    optional double                                 rtb_http_post_ver                       = 20 [default = 1.0];   // post default version is 1.0
+    optional bool                                   rtb_effective_bid_for_ano_enable        = 21 [default = false];
+    optional bool                                   rtb_effective_bid_for_partner_enable    = 22 [default = false];
+    optional bool                                   rtb_tradeoff_for_partner_enable         = 23 [default = false];
+    optional bool                                   rtb_enable_network_user_sleep           = 24 [default = false];
+    optional bool                                   rtb_tech_fee_v3                         = 25 [default = false];
+    optional bool                                   rtb_tech_fee_exclude_pmp                = 26 [default = false];
+    
+    optional bool                                   rtb_enable_req_throttle                 = 40 [default = false];
+    
+    
+
+    optional rubicon.data.common.BERequestResponseType_E    
+                                                    be_request_response_type                = 50 [default = JSON_BE_TYPE];  
+    
+    // memcached server for adcap
+    repeated string                                 adcap_memcached_servers                 = 55;
+    
+    // memcache server for adsafe
+    repeated string                                 adsafe_lookup_memcached_servers         = 56;
+    repeated string                                 adsafe_queue_memcached_servers          = 57;
+    optional double                                 adsafe_queue_sample_rate                = 58;
+    
+    // digital envoy servers
+    repeated string                                 digital_envoy_servers                   = 60;
+    optional uint32                                 digital_envoy_timeout                   = 61;     // timeout for digital envoy in micro seconds
+    
+    // logging
+    repeated uint32                                 suppressed_logging_size_ids             = 70;
+    
+    // multicast channel for message bus events
+    optional bool                                   log_multicast_enabled                   = 100 [default = true];
+    optional string                                 log_multicast_channel                   = 101;
+    optional uint32                                 log_multicast_port                      = 102;
+    optional uint32                                 log_multicast_ttl                       = 103;
+    optional bool                                   debug_log_multicast_enabled             = 110 [default = false];
+    optional string                                 debug_log_multicast_channel             = 111;
+    optional uint32                                 debug_log_multicast_port                = 112;
+    optional uint32                                 debug_log_multicast_ttl                 = 113;
+    
+    // gmonitor related 
+    optional bool                                   gmonitor_stats_enabled                  = 130 [default = false];
+    
+    
+    // load balancers
+    repeated fixed32                                load_balancers_ips                      = 150;
+    optional bool                                   load_balancers_ip_check                 = 151 [default = true];
+    
+    // metadata info
+    optional string                                 metadata_path                           = 160;
+    optional string                                 metadata_filename_pattern               = 161;
+    repeated MetaDataInfo_PB                        metadata                                = 162;
+   
+    // others
+    repeated string                                 ethnic_psa_dirs                         = 180;
+
+    enum LogLevel_E {
+        DISABLED_LOG_LEVEL    = 0;          // no messages at all 
+        CRITICAL_LOG_LEVEL    = 5;          // critical messages and above
+        ERROR_LOG_LEVEL       = 10;         // error messages and above
+        WARNING_LOG_LEVEL     = 15;         // warning messages and above
+        INFO_LOG_LEVEL        = 20;         // info messages and above
+        VERIFY_LOG_LEVEL      = 25;         // verify messages and above
+        DEBUG_LOG_LEVEL       = 30;         // debug messages and above 
+        DETAILED_LOG_LEVEL    = 35;         // detailed debug and above
+    }
+    
+    // log message
+    message Log_PB {
+        optional LogLevel_E         level   = 2 [default = INFO_LOG_LEVEL];
+        optional string             module  = 3;     
+    }
+    repeated Log_PB                                 log                                     = 200;
+    
+    // extra key/value pairs
+    repeated rubicon.data.common.KeyValuePair_PB    extras                                  = 300;
+    
+    // all the debugging flags
+    optional bool                                   debug_impressionid_override             = 400 [default = false];        // whether the impression_id must be overriden
+    optional bool                                   dump_objects                            = 401 [default = true];         // whether or not dump all the internal object when verification fails 
+        
+    // possibly not used ??
+    optional string                                 default_killer_uri                      = 500;    
+    
+    // depricated attributes ??
+    repeated uint64                                 html_default_killers                    = 1001;
+    optional string                                 bundy_server                            = 1002; 
+}
+ 
+ 

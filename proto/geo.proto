@@ -1,0 +1,454 @@
+//
+// all geo related attributes. Parts of this file (countries/regions/isp_speed/...) may need to be updated
+// once new attributes are added by Digital Envoy.
+//
+
+option optimize_for = SPEED;
+
+package rubicon.data.geo;
+
+import "num_types.proto";
+
+//
+// continents
+//
+message Continent_PB {
+    enum ContinentCode_E {
+        UNKNOWN       = 0;
+        AFRICA        = 1;
+        ANTARCTICA    = 2;
+        ASIA          = 3;
+        AUSTRALIA     = 4;
+        EUROPE        = 5;
+        NORTH_AMERICA = 6;
+        SOUTH_AMERICA = 7;
+    }
+    optional ContinentCode_E    continent_code  = 1 [default = UNKNOWN];        // Numerical representation of the continent
+    optional string             raw_value       = 2;                            // Raw value (if unknown)
+}
+
+//
+// countries
+//
+message Country_PB {
+    enum CountryCode_E {
+        UNKNOWN = 0;
+        AD      = 1;
+        AE      = 2;
+        AF      = 3;
+        AG      = 4;
+        AI      = 5;
+        AL      = 6;
+        AM      = 7;
+        AN      = 8;
+        AO      = 9;
+        AP      = 10;
+        AQ      = 11;
+        AR      = 12;
+        AS      = 13;
+        AT      = 14;
+        AU      = 15;
+        AW      = 16;
+        AZ      = 17;
+        BA      = 18;
+        BB      = 19;
+        BD      = 20;
+        BE      = 21;
+        BF      = 22;
+        BG      = 23;
+        BH      = 24;
+        BI      = 25;
+        BJ      = 26;
+        BM      = 27;
+        BN      = 28;
+        BO      = 29;
+        BR      = 30;
+        BS      = 31;
+        BT      = 32;
+        BV      = 33;
+        BW      = 34;
+        BY      = 35;
+        BZ      = 36;
+        CA      = 37;
+        CC      = 38;
+        CD      = 39;
+        CF      = 40;
+        CG      = 41;
+        CH      = 42;
+        CI      = 43;
+        CK      = 44;
+        CL      = 45;
+        CM      = 46;
+        CN      = 47;
+        CO      = 48;
+        CR_     = 49;           // stupid apache has #defined CR!!
+        CS      = 50;
+        CU      = 51;
+        CV      = 52;
+        CX      = 53;
+        CY      = 54;
+        CZ      = 55;
+        DE      = 56;
+        DJ      = 57;
+        DK      = 58;
+        DM      = 59;
+        DO      = 60;
+        DZ      = 61;
+        EC      = 62;
+        EE      = 63;
+        EG      = 64;
+        EH      = 65;
+        ER      = 66;
+        ES      = 67;
+        ET      = 68;
+        EU      = 69;
+        FI      = 70;
+        FJ      = 71;
+        FK      = 72;
+        FM      = 73;
+        FO      = 74;
+        FR      = 75;
+        GA      = 76;
+        GD      = 77;
+        GE      = 78;
+        GF      = 79;
+        GH      = 80;
+        GI      = 81;
+        GL      = 82;
+        GM      = 83;
+        GN      = 84;
+        GP      = 85;
+        GQ      = 86;
+        GR      = 87;
+        GS      = 88;
+        GT      = 89;
+        GU      = 90;
+        GW      = 91;
+        GY      = 92;
+        HK      = 93;
+        HM      = 94;
+        HN      = 95;
+        HR      = 96;
+        HT      = 97;
+        HU      = 98;
+        ID      = 99;
+        IE      = 100;
+        IL      = 101;
+        IN      = 102;
+        IO      = 103;
+        IQ      = 104;
+        IR      = 105;
+        IS      = 106;
+        IT      = 107;
+        JM      = 108;
+        JO      = 109;
+        JP      = 110;
+        KE      = 111;
+        KG      = 112;
+        KH      = 113;
+        KI      = 114;
+        KM      = 115;
+        KN      = 116;
+        KP      = 117;
+        KR      = 118;
+        KW      = 119;
+        KY      = 120;
+        KZ      = 121;
+        LA      = 122;
+        LB      = 123;
+        LC      = 124;
+        LI      = 125;
+        LK      = 126;
+        LR      = 127;
+        LS      = 128;
+        LT      = 129;
+        LU      = 130;
+        LV      = 131;
+        LY      = 132;
+        MA      = 133;
+        MC      = 134;
+        MD      = 135;
+        MG      = 136;
+        MH      = 137;
+        MK      = 138;
+        ML      = 139;
+        MM      = 140;
+        MN      = 141;
+        MO      = 142;
+        MP      = 143;
+        MQ      = 144;
+        MR      = 145;
+        MS      = 146;
+        MT      = 147;
+        MU      = 148;
+        MV      = 149;
+        MW      = 150;
+        MX      = 151;
+        MY      = 152;
+        MZ      = 153;
+        NA      = 154;
+        NC      = 155;
+        NE      = 156;
+        NF      = 157;
+        NG      = 158;
+        NI      = 159;
+        NL      = 160;
+        NO      = 161;
+        NP      = 162;
+        NR      = 163;
+        NU      = 164;
+        NZ      = 165;
+        OM      = 166;
+        PA      = 167;
+        PE      = 168;
+        PF      = 169;
+        PG      = 170;
+        PH      = 171;
+        PK      = 172;
+        PL      = 173;
+        PM      = 174;
+        PN      = 175;
+        PR      = 176;
+        PS      = 177;
+        PT      = 178;
+        PW      = 179;
+        PY      = 180;
+        QA      = 181;
+        RE      = 182;
+        RO      = 183;
+        RU      = 184;
+        RW      = 185;
+        SA      = 186;
+        SB      = 187;
+        SC      = 188;
+        SD      = 189;
+        SE      = 190;
+        SG      = 191;
+        SH      = 192;
+        SI      = 193;
+        SJ      = 194;
+        SK      = 195;
+        SL      = 196;
+        SM      = 197;
+        SN      = 198;
+        SO      = 199;
+        SR      = 200;
+        ST      = 201;
+        SV      = 202;
+        SY      = 203;
+        SZ      = 204;
+        TC      = 205;
+        TD      = 206;
+        TF      = 207;
+        TG      = 208;
+        TH      = 209;
+        TJ      = 210;
+        TK      = 211;
+        TL      = 212;
+        TM      = 213;
+        TN      = 214;
+        TO      = 215;
+        TR      = 216;
+        TT      = 217;
+        TV      = 218;
+        TW      = 219;
+        TZ      = 220;
+        UA      = 221;
+        UG      = 222;
+        UK      = 223;
+        UM      = 224;
+        US      = 225;
+        UY      = 226;
+        UZ      = 227;
+        VA      = 228;
+        VC      = 229;
+        VE      = 230;
+        VG      = 231;
+        VN      = 232;
+        VU      = 233;
+        WF      = 234;
+        WS      = 235;
+        YE      = 236;
+        YT      = 237;
+        ZA      = 238;
+        ZM      = 239;
+        ZW      = 240;
+        
+        // add new codes here
+        IM      = 241;
+        JE      = 242;
+        RS      = 243;
+        VI      = 244;
+        AX      = 245;
+        GG      = 246;
+        ME      = 247;
+                
+        // to cover "**"
+        STAR    = 500;
+    }    
+    optional CountryCode_E      country_code  = 1 [default = UNKNOWN];    // Numerical representation of the country
+    optional string             raw_value     = 2;                        // Raw value (if unknown)
+}
+
+//
+// regions
+//
+message Region_PB {
+    enum RegionCode_E {
+        UNKNOWN = 0;
+        AL = 1;
+        AK = 2;
+        AZ = 3;
+        AR = 4;
+        CA = 5;
+        CO = 6;
+        CT = 7;         // Connecticut / Australian Capital Territory
+        DE = 8;
+        FL = 9;
+        GA = 10;
+        HI = 11;
+        ID = 12;
+        IL = 13;
+        IN = 14;
+        IA = 15;
+        KS = 16;
+        KY = 17;
+        LA = 18;
+        ME = 19;
+        MD = 20;
+        MA = 21;
+        MI = 22;
+        MN = 23;
+        MS = 24;
+        MO = 25;
+        MT = 26;
+        NE = 27;
+        NV = 28;
+        NH = 29;
+        NJ = 30;
+        NM = 31;
+        NY = 32;
+        NC = 33;
+        ND = 34;
+        OH = 35;
+        OK_= 36;        // stupid apache has #defined OK!!
+        OR = 37;
+        PA = 38;
+        RI = 39;
+        SC = 40;
+        SD = 41;
+        TN = 42;
+        TX = 43;
+        UT = 44;
+        VT = 45;
+        VA = 46;
+        WA = 47;        // Washington / Western Australia
+        WV = 48;
+        WI = 49;
+        WY = 50;
+        // DC + non-us states
+        AB      = 51;       // alberta
+        AOL     = 52;       // AOL
+        B       = 53;       // Aquitaine
+        BC      = 54;       // British Columbia
+        BE      = 55;       // Berlin
+        BR      = 56;       // Brandenburg
+        BW      = 57;       // Baden-Württemberg
+        BY      = 58;       // Bayern
+        C       = 59;       // Auvergne
+        D       = 60;       // Bourgogne
+        DC      = 61;       // District Of Columbia
+        E       = 62;       // Bretagne
+        ENG     = 63;       // England
+        F       = 64;       // Centre
+        G       = 65;       // Champagne
+        H       = 66;       // Corse
+        HB      = 67;       // Bremen
+        HE      = 68;       // Hessen
+        HH      = 69;       // Hamburg
+        I       = 70;       // Franche-Comte
+        J       = 71;       // Ile-de-France
+        K       = 72;       // Languedoc-Roussillon
+        L       = 73;       // Limousin
+        M       = 74;       // Lorraine
+        MB      = 75;       // Manitoba
+        MV      = 76;       // Mecklenburg-Vorpommern
+        N       = 77;       // Midi-Pyrénées
+        NB      = 78;       // New Brunswick
+        NF      = 79;       // Newfoundland
+        NI      = 80;       // Niedersachsen
+        NIR     = 81;       // Northern Ireland / Scotland
+        NS      = 82;       // New South Wales / Nova Scotia
+        NT      = 83;       // Northern Territory / Northwest Territories
+        NU      = 84;       // Nunavut
+        NW      = 85;       // Nordrhein-Westfalen
+        O       = 86;       // Nord-Pas-de-Calais
+        ON      = 87;       // Ontario
+        P       = 88;       // Basse-Normandie
+        PE      = 89;       // Prince Edward Island
+        Q       = 90;       // Haute-Normandie
+        QC      = 91;       // Quebec
+        QL      = 92;       // Queensland
+        R       = 93;       // Pays de la Loire
+        RP      = 94;       // Rheinland-Pfalz
+        S       = 95;       // Picardie
+        SA      = 96;       // South Australia
+        SH      = 97;       // Schleswig-Holstein
+        SK      = 98;       // Saskatchewan
+        SL      = 99;       // Saarland
+        SN      = 100;      // Sachsen
+        ST      = 101;      // Sachsen-Anhalt
+        T       = 102;      // Poitou-Charentes
+        TH      = 103;      // Thüringen
+        TS      = 104;      // Tasmania
+        U       = 105;      // Provence-Alpes-Côte d'Azur
+        V       = 106;      // Rhône-Alpes
+        VI      = 107;      // Victoria
+        WLS     = 108;      // Wales
+        YT      = 109;      // Yukon Territory
+    }
+    optional RegionCode_E       region_code     = 1 [default = UNKNOWN];    // Numerical representation of the US state/Possession
+    optional string             raw_value       = 2;                        // Raw value (if unknown)
+}
+
+//
+// speed of the isp
+//
+message Speed_PB {
+    enum SpeedType_E {
+        UNKNOWN     = 1;
+        DIALUP      = 2;         // dialup in legacy AE code is defined as 2!!
+        BROADBAND   = 3;
+        CABLE       = 4;
+        XSDL        = 5;
+        T1          = 6;
+        T3          = 7;
+        OC3         = 8;
+        OC12        = 9;
+        SATELLITE   = 10;
+        WIRELESS    = 11;
+        MOBILE      = 12;
+        // AdEngine coders: if anything is added here, make sure input_cookies.cpp 
+        // is also updated, both for static vars and where MOBILE is used
+    }   
+    optional SpeedType_E       type             = 1 [default = UNKNOWN];
+    optional string            raw_value        = 2;
+}
+
+//
+// message for geo related fields that are obtained fro digital envoy. 
+//
+message Geo_PB {
+    optional string                             isp_name            = 1;
+    optional Speed_PB                           connection_speed    = 2;    // also known as cspeed
+    optional Continent_PB                       continent           = 3;
+    optional Country_PB                         country             = 4;  
+    optional Region_PB                          deprecated_region   = 5;    // also known as state, not used any more, look at "region"
+    optional string                             metro               = 6;    // also known as dma
+    optional string                             city                = 7;   
+    optional string                             zip_code            = 8;    // also known as postal_code, string to handle numbers starting with "0"
+    optional rubicon.data.common.AnUInt32_PB    area_code           = 9;    // UInt32 since we may get bad data from user  
+    optional rubicon.data.common.AnInt32_PB     gmt_offset          = 10;   // also known as gmt, it is the gmt * 100, may very well be negative
+    optional string                             domain_name         = 11;   // also known as dsuffix
+    optional string                             region              = 12;   // region (replacing deprecated_region)
+}

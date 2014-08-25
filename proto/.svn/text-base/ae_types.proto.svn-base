@@ -1,0 +1,113 @@
+//
+// types/enums used by adengine
+// 
+
+option optimize_for = SPEED;
+
+package rubicon.data.ad_engine;
+
+//
+// click ad type
+//
+enum ClickAdType_E {
+    UNSET_CLICK_TYPE            = 0;
+    IMAGE_CLICK_TYPE            = 1;        // ad_id == -1
+    MATCHING_CLICK_TYPE         = 2;        // ad_id == 1
+    REGULAR_CLICK_TYPE          = 3;
+}
+
+
+//
+// request type
+//    
+enum RequestType_E {
+    UNKNOWN_REQUEST              = 0;        // unknown
+    IMPRESSION_REQUEST           = 1;        // impression
+    IFRAME_REQUEST               = 2;        // iframe
+    CLICK_REDIRECT_REQUEST       = 3;        // click redirect
+    VIEWER_REQUEST               = 4;        // viewer for rules file
+    CLICK_SERVE_REQUEST          = 5;        // click
+    PSA_REQUEST                  = 6;        // public service announcement
+}
+
+
+//
+// codes representing RTB operations results
+//
+enum RTBOperationResultCode_E {
+    UNKNOWN_RTB_CODE                        = 0;
+    BID_ENGINE_RESPONSE_OK                  = 1;
+    
+    // bid engine related code
+    BID_ENGINE_RESPONSE_TIMED_OUT           = 10;
+    BID_ENGINE_EMPTY_RESPONSE               = 11;
+    BID_ENGINE_DECLINED_TO_SERVICE          = 12;
+    BID_ENGINE_HTTP_ERROR                   = 13;
+    BID_ENGINE_NETWORK_ERROR                = 14;
+    BID_ENGINE_INVALID_JSON                 = 15;
+    BID_ENGINE_INVALID_PROTOBUF             = 16;
+        
+    // rtb not enabled codes
+    RTB_DISABLED_USER_OPT_OUT               = 30;
+    RTB_DISABLED_NOT_SAMPLED                = 31;
+    RTB_DISABLED_NO_AVAILABLE_ADS           = 32;
+    RTB_DISABLED_NO_RTB_NETWORKS            = 33;
+    RTB_DISABLED_NOT_CONFIGURED_IN_RULES    = 34;
+    RTB_DISABLED_INVALID_MIME_TYPE          = 35;
+    RTB_DISABLED_NOT_ENABLED_FOR_IMPERSSION = 36;
+    RTB_DISABLED_UNKNOWN                    = 37;   // unknown reason, should not happen    
+        
+    // throttling code
+    THROTTLED_AVAILABLE_SLOTS               = 50;   // obsolete/currently disabled
+    THROTTLES_SYSTEM_LOAD                   = 51;   
+    THROTTLED_BE_RESPONSE_LATENCY           = 52;
+    THROTTLED_ERROR_RATE                    = 53;
+    THROTTLED_TIMEOUT_RATE                  = 54;
+    THROTTLED_SKIPPED                       = 55;   // default skip/throttle   
+}
+
+//
+// codes representing the reason for fall back to PSA
+//
+enum PSACode_E {
+    UNKNOWN_PSA              = 0;
+    ALG_ERROR_PSA            = 1;
+    BAD_CLICK_PSA            = 2;
+    BAD_REQUEST_PSA          = 3;
+    BAD_REMOTE_IP_PSA        = 4;
+    BAD_SESSION_ID_PSA       = 5;
+    DEBUG_NO_AD_PSA          = 6;
+    DEBUG_TABLE_PSA          = 7;
+    DK_BAD_TOKEN_PSA         = 8;
+    DK_END_CHAIN_PSA         = 9;
+    NO_ADS_PSA               = 10;
+    NO_BACKFILL_PSA          = 11;
+    NO_BACKFILL_HOUSE_PSA    = 12;
+    NO_CREATIVE_PSA          = 13;
+    NO_DATA_PSA              = 14;
+    NO_REFERRER_MATCH_PSA    = 15;
+    NO_RULES_PSA             = 16;
+}
+
+
+//
+// codes representing the algorithm that was used to pick the winning ad
+//
+enum AlgorithmCode_E {
+    UNKNOWN_ALGORITHM                             = 0;
+    DK_ALGORITHM                                  = 1;
+    DK_BACKFILL_ALGORITHM                         = 2;
+    DK_BACKFILL_HOUSE_ALGORITHM                   = 3;
+    DK_BACKFILL_OVERLIMIT_ALGORITHM               = 4;
+    DK_BACKFILL_PSA_ALGORITHM                     = 5;
+    DK_STATIC_ALGORITHM                           = 6;
+    FIXED_ORDER_FIRST_X_ALGORITHM                 = 7;
+    GUARANTEED_TOURNAMENT_ALGORITHM               = 8;
+    POOLED_TOURNAMENT_ALGORITHM                   = 9;
+    POOLED_TOURNAMENT_AUDIENCE_ALGORITHM          = 10;
+    POOLED_TOURNAMENT_HEURISTIC_ALGORITHM         = 11;
+    ROULETTE_WHEEL_ALGORITHM                      = 12;
+    ROULETTE_WHEEL_TARGETED_ENHANCER_ALGORITHM    = 13;
+    TARGETED_ENHANCER_ALGORITHM                   = 14;
+    DEBUG_ALGORITHM                               = 50;
+}
